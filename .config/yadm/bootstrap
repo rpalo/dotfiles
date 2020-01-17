@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Bootstrap Script
+#
+# Sets up a new computer the way I like it.
+#
+# Assumes dotfiles are in-place and the bootstrap_essential
+# script has been run.
+
+# Install zsh
+
+echo "### Installing Zsh and Oh-My-Zsh ###"
+sudo apt install zsh
+sudo echo $( which zsh ) >> /etc/shells
+chsh -s $( which zsh )
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo "### Installing Vim Plugins ###"
+~/bin/setup/install_vimplug.sh
+
+echo "### Complete!  Open a new shell for Zsh changes to take place. ###"

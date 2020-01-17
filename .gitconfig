@@ -1,0 +1,11 @@
+[user]
+	name = Ryan Palo
+	email = ryan@thepalos.com
+[core]
+	safecrlf = warn
+	autocrlf = input
+[alias]
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	lg = log --oneline --decorate --graph
+[include]
+	path = .gitconfig.local
