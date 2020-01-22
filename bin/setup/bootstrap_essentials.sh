@@ -4,10 +4,9 @@
 # 
 # Get everything set up so that yadm can take over
 
-# Make sure we're all updated and ready to go
+echo "=== Updating ==="
 sudo apt update && sudo apt upgrade
 
-# Install the stuff that makes it easy to install all the other stuff
 required_packages=(
   ssh
   git
@@ -16,4 +15,11 @@ required_packages=(
   yadm
 )
 
-sudo apt install $required_packages 
+echo "=== Installing the requested packages ==="
+sudo apt install "${required_packages[@]}" 
+
+echo "=== Essential bootstrap complete! ==="
+
+echo "=== Cloning dotfiles ==="
+yadm clone https://github.com/rpalo/dotfiles.git --bootstrap
+

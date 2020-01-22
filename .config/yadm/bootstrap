@@ -10,10 +10,25 @@
 # Install zsh
 
 echo "### Installing Zsh and Oh-My-Zsh ###"
-sudo apt install zsh
-sudo echo $( which zsh ) >> /etc/shells
-chsh -s $( which zsh )
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+if ! which zsh; then
+  echo "## No ZSH detected.  Installing ZSH..." 
+  sudo apt install zsh
+fi
+
+if ! [[ grep -q 'zsh' /etc/shells ]]; then
+  echo "## ZSH not detected as an allowed shell.  Adding to shells..."
+  sudo echo $( which zsh ) >> /etc/shells
+fi
+
+if ! [[ $( awk -v user=$USER '/$user/ {print $7}' /etc/passwd ) ~= zsh ]]; then
+  echo "## $USER's shell not set as ZSH.  Setting..."
+  chsh -s $( which zsh )
+fi
+
+if [[ ! -d ~/.oh-my-zsh ]]; then
+  echo "## No install of oh-my-zsh detected.  Installing..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
 
 echo "### Installing Vim Plugins ###"
 ~/bin/setup/install_vimplug.sh
