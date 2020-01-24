@@ -7,7 +7,7 @@ set nocompatible
 
 " Plugins {{{
 
-call plug#begin('~/.vim/plugged)
+call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'scrooloose/nerdtree'

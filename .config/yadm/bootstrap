@@ -15,12 +15,12 @@ if ! which zsh; then
   sudo apt install zsh
 fi
 
-if ! [[ grep -q 'zsh' /etc/shells ]]; then
+if ! grep -q 'zsh' /etc/shells; then
   echo "## ZSH not detected as an allowed shell.  Adding to shells..."
   sudo echo $( which zsh ) >> /etc/shells
 fi
 
-if ! [[ $( awk -v user=$USER '/$user/ {print $7}' /etc/passwd ) ~= zsh ]]; then
+if ! grep -Eq "$USER.*zsh" /etc/passwd; then
   echo "## $USER's shell not set as ZSH.  Setting..."
   chsh -s $( which zsh )
 fi
