@@ -6,28 +6,25 @@
 
 clean="true"
 
-yadm stash &> /dev/null
-
-if ! yadm diff origin/master --quiet; then
+if [[ -f ~/.dotfiles_behind_upstream ]]; then
   echo "Your dotfiles aren't up to date with remote."
   read -p "Sync now?  [yN]" -n1 response
 
   if [[ $response == y ]]; then
     yadm pull
     echo "Dotfiles synced."
-    exit 0
+    rm ~/.dotfiles_behind_upstream
   else
     echo "Skipping sync."
   fi
   clean="false"
 fi
 
-yadm stash pop &> /dev/null
-
-if ! yadm diff --quiet; then
+if [[ -f ~/.dotfiles_uncommitted ]]; then
   echo "There are unstaged changes to your dotfiles."
   echo
   yadm status
+  rm ~/.dotfiles_uncommitted
   clean="false"
 fi
 
