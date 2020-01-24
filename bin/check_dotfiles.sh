@@ -31,6 +31,6 @@ if ! yadm diff --quiet; then
   clean="false"
 fi
 
-if [[ clean == true ]]; then
+if [[ $clean == true ]]; then
   echo "Dotfiles are up to date."
 fi
