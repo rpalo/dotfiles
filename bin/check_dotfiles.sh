@@ -6,7 +6,7 @@
 
 clean="true"
 
-yadm stash > /dev/null
+yadm stash &> /dev/null
 
 if ! yadm diff origin/master --quiet; then
   echo "Your dotfiles aren't up to date with remote."
@@ -22,7 +22,7 @@ if ! yadm diff origin/master --quiet; then
   clean="false"
 fi
 
-yadm stash pop > /dev/null
+yadm stash pop &> /dev/null
 
 if ! yadm diff --quiet; then
   echo "There are unstaged changes to your dotfiles."
