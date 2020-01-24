@@ -7,30 +7,34 @@
 # Assumes dotfiles are in-place and the bootstrap_essential
 # script has been run.
 
-# Install zsh
+echo "### Bootstrap Script"
+echo "### Setting up your computer..."
 
-echo "### Installing Zsh and Oh-My-Zsh ###"
+echo "## Installing Zsh and Oh-My-Zsh..."
 if ! which zsh; then
-  echo "## No ZSH detected.  Installing ZSH..." 
+  echo "# No ZSH detected.  Installing ZSH..." 
   sudo apt install zsh
 fi
 
 if ! grep -q 'zsh' /etc/shells; then
-  echo "## ZSH not detected as an allowed shell.  Adding to shells..."
+  echo "# ZSH not detected as an allowed shell.  Adding to shells..."
   sudo echo $( which zsh ) >> /etc/shells
 fi
 
 if ! grep -Eq "$USER.*zsh" /etc/passwd; then
-  echo "## $USER's shell not set as ZSH.  Setting..."
+  echo "# $USER's shell not set as ZSH.  Setting..."
   chsh -s $( which zsh )
 fi
 
 if [[ ! -d ~/.oh-my-zsh ]]; then
-  echo "## No install of oh-my-zsh detected.  Installing..."
+  echo "# No install of oh-my-zsh detected.  Installing..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
-echo "### Installing Vim Plugins ###"
+echo "## Installing Vim Plugins"
 ~/bin/setup/install_vimplug.sh
 
-echo "### Complete!  Open a new shell for Zsh changes to take place. ###"
+echo "## Setting up cronjobs"
+~/bin/setup/add_cronjobs.sh
+
+echo "### Complete!  Open a new shell for Zsh changes to take place."
